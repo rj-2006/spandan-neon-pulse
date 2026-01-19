@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -32,13 +33,24 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="font-display text-sm text-foreground/80 hover:text-primary transition-colors duration-300 tracking-wide"
-              >
-                {link.name}
-              </Link>
+              link.href.includes('#') ? (
+                <HashLink
+                  key={link.name}
+                  to={link.href}
+                  className="font-display text-sm text-foreground/80 hover:text-primary transition-colors duration-300 tracking-wide"
+                  smooth
+                >
+                  {link.name}
+                </HashLink>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="font-display text-sm text-foreground/80 hover:text-primary transition-colors duration-300 tracking-wide"
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </div>
 
@@ -73,14 +85,26 @@ const Navbar = () => {
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="font-display text-lg text-foreground/80 hover:text-primary transition-colors py-2"
-                >
-                  {link.name}
-                </Link>
+                link.href.includes('#') ? (
+                  <HashLink
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-display text-lg text-foreground/80 hover:text-primary transition-colors py-2"
+                    smooth
+                  >
+                    {link.name}
+                  </HashLink>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-display text-lg text-foreground/80 hover:text-primary transition-colors py-2"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
               <Button variant="default" className="mt-2 font-display font-semibold">
                 Register Now

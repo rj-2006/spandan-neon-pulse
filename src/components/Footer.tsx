@@ -11,9 +11,9 @@ const socialLinks = [
 const quickLinks = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
-  { name: "Timeline", href: "/#timeline" },
-  { name: "About", href: "/#about" },
-  { name: "Partners", href: "/#partners" },
+  { name: "Timeline", href: "/timeline" },
+  { name: "About", href: "/about" },
+  { name: "Partners", href: "/partners" },
 ];
 
 const Footer = () => {

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
 const timelineData = {
@@ -23,18 +23,51 @@ const timelineData = {
 
 const Timeline = () => {
   const [activeDay, setActiveDay] = useState<"day1" | "day2">("day1");
+  const [activeItemIndex, setActiveItemIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start center", "end center"]
-  });
+  const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const lineHeightValue = useMotionValue(0);
+  const lineHeightSpring = useSpring(lineHeightValue, { stiffness: 300, damping: 30 });
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const currentDots = dotRefs.current;
+
+    currentDots.forEach((dot, index) => {
+      if (dot) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setActiveItemIndex(index);
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+        observer.observe(dot);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [activeDay]); // Re-run when activeDay changes
+
+  useEffect(() => {
+    if (activeItemIndex >= 0 && dotRefs.current[activeItemIndex] && timelineRef.current) {
+      const dotRect = dotRefs.current[activeItemIndex].getBoundingClientRect();
+      const timelineRect = timelineRef.current.getBoundingClientRect();
+      const dotCenter = dotRect.top - timelineRect.top + dotRect.height / 2;
+      lineHeightValue.set(dotCenter);
+    }
+  }, [activeItemIndex, lineHeightValue]);
 
   return (
-    <section id="timeline" className="py-20 md:py-32 relative bg-secondary/20" ref={containerRef}>
+    <section id="timeline" className="py-20 md:py-32 relative bg-secondary/20 scroll-snap-start" ref={containerRef}>
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -83,10 +116,10 @@ const Timeline = () => {
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border/30 md:-translate-x-1/2" />
             
             {/* Animated Progress Line */}
-            <motion.div 
+            <motion.div
               className="absolute left-4 md:left-1/2 top-0 w-px bg-primary md:-translate-x-1/2 origin-top"
-              style={{ 
-                height: lineHeight,
+              style={{
+                height: lineHeightSpring,
                 boxShadow: "0 0 10px hsl(67 100% 50% / 0.5), 0 0 20px hsl(67 100% 50% / 0.3)"
               }}
             />
@@ -102,7 +135,8 @@ const Timeline = () => {
                 }`}
               >
                 {/* Timeline Dot */}
-                <motion.div 
+                <motion.div
+                  ref={(el) => (dotRefs.current[index] = el)}
                   className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary border-2 border-background md:-translate-x-1/2 z-10"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}

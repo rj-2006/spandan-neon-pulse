@@ -7,7 +7,7 @@ import heroImage from "@/assets/hero-robot.png";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid scroll-snap-start">
       {/* Background Gradient Overlay - fades to match next section */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-secondary/20 pointer-events-none" />
       

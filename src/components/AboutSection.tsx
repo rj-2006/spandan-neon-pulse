@@ -26,7 +26,7 @@ const features = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-20 md:py-32 relative">
+    <section id="about" className="py-20 md:py-32 relative scroll-snap-start">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
