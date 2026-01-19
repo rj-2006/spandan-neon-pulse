@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
 const timelineData = {
@@ -23,9 +23,18 @@ const timelineData = {
 
 const Timeline = () => {
   const [activeDay, setActiveDay] = useState<"day1" | "day2">("day1");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="timeline" className="py-20 md:py-32 relative bg-secondary/20">
+    <section id="timeline" className="py-20 md:py-32 relative bg-secondary/20" ref={containerRef}>
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -69,9 +78,18 @@ const Timeline = () => {
           transition={{ duration: 0.4 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="relative">
-            {/* Vertical Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
+          <div className="relative" ref={timelineRef}>
+            {/* Background Vertical Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border/30 md:-translate-x-1/2" />
+            
+            {/* Animated Progress Line */}
+            <motion.div 
+              className="absolute left-4 md:left-1/2 top-0 w-px bg-primary md:-translate-x-1/2 origin-top"
+              style={{ 
+                height: lineHeight,
+                boxShadow: "0 0 10px hsl(67 100% 50% / 0.5), 0 0 20px hsl(67 100% 50% / 0.3)"
+              }}
+            />
 
             {timelineData[activeDay].map((item, index) => (
               <motion.div
@@ -84,10 +102,23 @@ const Timeline = () => {
                 }`}
               >
                 {/* Timeline Dot */}
-                <div className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary border-2 border-background md:-translate-x-1/2 z-10" />
+                <motion.div 
+                  className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary border-2 border-background md:-translate-x-1/2 z-10"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  style={{
+                    boxShadow: "0 0 10px hsl(67 100% 50% / 0.6)"
+                  }}
+                />
 
                 {/* Content Card */}
-                <div
+                <motion.div
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
                   className={`ml-10 md:ml-0 md:w-[calc(50%-2rem)] glow-card p-4 ${
                     index % 2 === 0 ? "md:mr-auto md:text-right" : "md:ml-auto"
                   }`}
@@ -109,7 +140,7 @@ const Timeline = () => {
                     <MapPin className="w-3 h-3" />
                     <span className="font-body">{item.venue}</span>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>

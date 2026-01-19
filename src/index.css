@@ -121,12 +121,33 @@
     @apply opacity-100;
   }
 
-  /* Cyber Grid Background */
+  /* Cyber Grid Background - Animated */
   .cyber-grid {
+    position: relative;
+  }
+
+  .cyber-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background-image: 
-      linear-gradient(hsl(67 100% 50% / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(67 100% 50% / 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
+      linear-gradient(hsl(67 100% 50% / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(67 100% 50% / 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: grid-scroll 20s linear infinite;
+    mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .cyber-grid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at center, hsl(67 100% 50% / 0.08) 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: dot-pulse 4s ease-in-out infinite;
+    mask-image: radial-gradient(ellipse 60% 40% at 50% 40%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 40% at 50% 40%, black 20%, transparent 80%);
   }
 
   /* Animated Border */
@@ -189,4 +210,14 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes grid-scroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 }

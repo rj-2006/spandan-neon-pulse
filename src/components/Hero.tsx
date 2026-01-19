@@ -8,12 +8,12 @@ import heroImage from "@/assets/hero-robot.png";
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid">
-      {/* Background Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+      {/* Background Gradient Overlay - fades to match next section */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-secondary/20 pointer-events-none" />
       
       {/* Radial Glow Effect */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-30"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-30 pointer-events-none"
         style={{
           background: "radial-gradient(circle, hsl(67 100% 50% / 0.15) 0%, transparent 70%)"
         }}
