@@ -53,11 +53,12 @@ const EventRegistration = () => {
         description: `You have successfully registered for ${formData.event}!`,
       });
       navigate("/events");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
       toast({
         variant: "destructive",
         title: "Registration Failed",
-        description: error.response?.data?.message || "An error occurred during registration.",
+        description: err.response?.data?.message || "An error occurred during registration.",
       });
     } finally {
       setIsSubmitting(false);

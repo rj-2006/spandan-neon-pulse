@@ -19,10 +19,10 @@ apiClient.interceptors.request.use((config) => {
 });
 
 export const authAPI = {
-  login: async (data: any) => {
+  login: async (data: Record<string, unknown>) => {
     return apiClient.post('/auth/login', data);
   },
-  register: async (data: any) => {
+  register: async (data: Record<string, unknown>) => {
     return apiClient.post('/auth/register', data);
   },
   logout: async () => {
@@ -40,7 +40,7 @@ export const authAPI = {
 };
 
 export const eventsAPI = {
-  registerParticipant: async (data: any) => {
+  registerParticipant: async (data: Record<string, unknown>) => {
     return apiClient.post('/participant/register', data);
   }
 };

@@ -25,8 +25,9 @@ export default function Login() {
       setToken(response.data.accessToken);
       toast.success("Successfully logged in");
       navigate("/");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to login");
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      toast.error(err.response?.data?.message || "Failed to login");
     } finally {
       setLoading(false);
     }

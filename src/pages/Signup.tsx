@@ -22,8 +22,9 @@ export default function Signup() {
       await authAPI.register({ name, email, password });
       toast.success("Account created successfully! Please login.");
       navigate("/login");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to create account");
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } };
+      toast.error(err.response?.data?.message || "Failed to create account");
     } finally {
       setLoading(false);
     }

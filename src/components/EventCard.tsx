@@ -11,6 +11,7 @@ interface EventCardProps {
   teamSize: string;
   image: string;
   index: number;
+  onViewDetails?: () => void;
 }
 
 const EventCard = ({
@@ -21,12 +22,15 @@ const EventCard = ({
   teamSize,
   image,
   index,
+  onViewDetails,
 }: EventCardProps) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
 
   const handleCardClick = () => {
-    if (isAuthenticated) {
+    if (onViewDetails) {
+      onViewDetails();
+    } else if (isAuthenticated) {
       navigate(`/register?event=${encodeURIComponent(title)}`);
     } else {
       navigate("/login");
