@@ -68,7 +68,7 @@ function Counter({ value, prefix = "", suffix = "" }: { value: number; prefix?: 
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 md:py-36 relative overflow-hidden">
+    <section id="about" className="pt-24 pb-10 md:pt-36 md:pb-14 relative overflow-hidden">
       {/* Subtle background pattern */}
       <div
         className="absolute inset-0 pointer-events-none"

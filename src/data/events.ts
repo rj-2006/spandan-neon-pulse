@@ -1,7 +1,6 @@
 export interface EventCoordinator {
   name: string;
   phone: string;
-  photo: string;
 }
 
 export interface EventData {
@@ -12,7 +11,7 @@ export interface EventData {
   teamSize: string;
   image: string;
   rulebookUrl?: string;
-  coordinator?: EventCoordinator;
+  coordinators?: EventCoordinator[];
 }
 
 export const events: EventData[] = [
@@ -23,11 +22,6 @@ export const events: EventData[] = [
     date: "May 1–2 (Day 1–2)",
     teamSize: "2-4 members",
     image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
-    coordinator: {
-      name: "Alex Johnson",
-      phone: "+1 (555) 123-4567",
-      photo: "https://i.pravatar.cc/150?u=alex"
-    }
   },
   {
     title: "AlgoRhythm",
@@ -37,11 +31,10 @@ export const events: EventData[] = [
     teamSize: "3-5 members",
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1LKBdnXY13xYWwVQA23wo-PHkLY26vGU4/view?usp=drive_link",
-    coordinator: {
-      name: "Sarah Chen",
-      phone: "+1 (555) 987-6543",
-      photo: "https://i.pravatar.cc/150?u=sarah"
-    }
+    coordinators: [
+      { name: "Utsav Kashyap",  phone: "8755051637" },
+      { name: "Saket Kandari",  phone: "7668877496" },
+    ],
   },
   {
     title: "AI Foresight",
@@ -51,11 +44,9 @@ export const events: EventData[] = [
     teamSize: "1-3 members",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1ZF4XY_Vpgjbzi0VJXedNhoKgoWX2x0IO/view?usp=drive_link",
-    coordinator: {
-      name: "Michael Smith",
-      phone: "+1 (555) 456-7890",
-      photo: "https://i.pravatar.cc/150?u=michael"
-    }
+    coordinators: [
+      { name: "Jiyanshi Batra", phone: "+91 8445021974" },
+    ],
   },
   {
     title: "BridgeIt",
@@ -65,11 +56,10 @@ export const events: EventData[] = [
     teamSize: "2-4 members",
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1MMKuKclmf2Fbmn4wBgaV5qub2f9XjgxH/view?usp=drive_link",
-    coordinator: {
-      name: "David Miller",
-      phone: "+1 (555) 234-5678",
-      photo: "https://i.pravatar.cc/150?u=david"
-    }
+    coordinators: [
+      { name: "Yuvraj Singh Makhloga", phone: "+91 7088305386" },
+      { name: "Abhay Kumar",           phone: "+91 9325517255" },
+    ],
   },
   {
     title: "TechScape Hunt",
@@ -79,11 +69,9 @@ export const events: EventData[] = [
     teamSize: "1-2 members",
     image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1Q4S0EX34m1A98AIwOLh6_dMBdfL3VZjo/view?usp=drive_link",
-    coordinator: {
-      name: "Emma Wilson",
-      phone: "+1 (555) 345-6789",
-      photo: "https://i.pravatar.cc/150?u=emma"
-    }
+    coordinators: [
+      { name: "Gaurav Pal", phone: "8439051108" },
+    ],
   },
   {
     title: "GeoCraft Arena",
@@ -93,11 +81,9 @@ export const events: EventData[] = [
     teamSize: "1-2 members",
     image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1ylT1-M35l92pXgryOpy1jpRKyp-zRuQQ/view?usp=drive_link",
-    coordinator: {
-      name: "James Taylor",
-      phone: "+1 (555) 456-7891",
-      photo: "https://i.pravatar.cc/150?u=james"
-    }
+    coordinators: [
+      { name: "Anmol Dimri", phone: "+91 9389640540" },
+    ],
   },
   {
     title: "NetRunnerz",
@@ -107,11 +93,9 @@ export const events: EventData[] = [
     teamSize: "2-3 members",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1TErG-jeiFyAED9FsWo2P1bZNXVx5LcYT/view?usp=drive_link",
-    coordinator: {
-      name: "Sophia Martinez",
-      phone: "+1 (555) 567-8901",
-      photo: "https://i.pravatar.cc/150?u=sophia"
-    }
+    coordinators: [
+      { name: "Sujal Singh Bisht", phone: "8218204560" },
+    ],
   },
   {
     title: "EcoInnovate",
@@ -120,11 +104,6 @@ export const events: EventData[] = [
     date: "May 2–3 (Day 2–3)",
     teamSize: "1-5 members",
     image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80",
-    coordinator: {
-      name: "Liam Anderson",
-      phone: "+1 (555) 678-9012",
-      photo: "https://i.pravatar.cc/150?u=liam"
-    }
   },
   {
     title: "DesignForge",
@@ -134,11 +113,10 @@ export const events: EventData[] = [
     teamSize: "2-4 members",
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/1HkXIh7B5JgAkk1c3fwOYbbwd8adXjAPP/view?usp=drive_link",
-    coordinator: {
-      name: "Olivia Davis",
-      phone: "+1 (555) 789-0123",
-      photo: "https://i.pravatar.cc/150?u=olivia"
-    }
+    coordinators: [
+      { name: "Yashpreet Singh", phone: "+91 6398150951" },
+      { name: "Kriti Uniyal",    phone: "+91 7983173102" },
+    ],
   },
   {
     title: "Circuit Chase",
@@ -148,11 +126,9 @@ export const events: EventData[] = [
     teamSize: "1-2 members",
     image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
     rulebookUrl: "https://drive.google.com/file/d/10fs3mQpKnMuDn2bxMHNip7bQ5B27PkCN/view?usp=drive_link",
-    coordinator: {
-      name: "Noah Rodriguez",
-      phone: "+1 (555) 890-1234",
-      photo: "https://i.pravatar.cc/150?u=noah"
-    }
+    coordinators: [
+      { name: "Anubhav Dimri", phone: "7817832297" },
+    ],
   },
   {
     title: "WALL-E",

@@ -154,7 +154,8 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                 </p>
 
                 {/* Coordinator */}
-                {event.coordinator && (
+                {/* Coordinators */}
+                {event.coordinators && event.coordinators.length > 0 && (
                   <div
                     className="rounded-xl p-4"
                     style={{
@@ -164,30 +165,32 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                   >
                     <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
                       <UserIcon className="w-3.5 h-3.5" style={{ color: "hsl(78 100% 50%)" }} />
-                      Event Coordinator
+                      Event Coordinator{event.coordinators.length > 1 ? "s" : ""}
                     </h3>
-                    <div className="flex items-center justify-between flex-wrap gap-3">
-                      <p className="font-display font-semibold text-foreground">
-                        {event.coordinator.name}
-                      </p>
-                      <a
-                        href={`tel:${event.coordinator.phone.replace(/[^0-9+]/g, "")}`}
-                        className="flex items-center gap-1.5 text-sm font-display font-medium px-3 py-1.5 rounded-lg transition-all duration-200"
-                        style={{
-                          background: "hsl(78 100% 50% / 0.08)",
-                          border: "1px solid hsl(78 100% 50% / 0.2)",
-                          color: "hsl(78 100% 50%)",
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.15)";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.08)";
-                        }}
-                      >
-                        <Phone className="w-3.5 h-3.5" />
-                        {event.coordinator.phone}
-                      </a>
+                    <div className="flex flex-col gap-2">
+                      {event.coordinators.map((coord) => (
+                        <div key={coord.name} className="flex items-center justify-between flex-wrap gap-2">
+                          <p className="font-display font-semibold text-foreground text-sm">{coord.name}</p>
+                          <a
+                            href={`tel:${coord.phone.replace(/[^0-9+]/g, "")}`}
+                            className="flex items-center gap-1.5 text-xs font-display font-medium px-3 py-1.5 rounded-lg transition-all duration-200"
+                            style={{
+                              background: "hsl(78 100% 50% / 0.08)",
+                              border: "1px solid hsl(78 100% 50% / 0.2)",
+                              color: "hsl(78 100% 50%)",
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.15)";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.08)";
+                            }}
+                          >
+                            <Phone className="w-3 h-3" />
+                            {coord.phone}
+                          </a>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

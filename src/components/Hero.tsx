@@ -85,22 +85,24 @@ const Hero = () => {
           </motion.div>
 
           {/* Main Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="mb-6"
-          >
+          <div className="mb-6">
             <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-black leading-none tracking-tight">
-              <span
-                className="glitch neon-text"
+              <motion.span
+                className="neon-shimmer neon-text inline-block"
                 data-text="SPANDAN"
+                initial={{ clipPath: "inset(0 100% 0 0)", opacity: 1 }}
+                animate={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ willChange: "clip-path" }}
               >
                 SPANDAN
-              </span>
+              </motion.span>
               <br />
-              <span
-                className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+              <motion.span
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.0, ease: "easeOut" }}
+                className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl inline-block"
                 style={{
                   background: "var(--gradient-neon)",
                   backgroundClip: "text",
@@ -110,9 +112,9 @@ const Hero = () => {
                 }}
               >
                 3.0
-              </span>
+              </motion.span>
             </h1>
-          </motion.div>
+          </div>
 
           {/* Tagline */}
           <motion.p
