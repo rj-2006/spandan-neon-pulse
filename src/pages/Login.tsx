@@ -7,7 +7,7 @@ import { authAPI } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { Zap, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -47,7 +47,7 @@ export default function Login() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 70% at 30% 50%, hsl(62 100% 52% / 0.06) 0%, transparent 60%)," +
+            "radial-gradient(ellipse 70% 70% at 30% 50%, hsl(78 100% 50% / 0.06) 0%, transparent 60%)," +
             "radial-gradient(ellipse 50% 50% at 80% 20%, hsl(185 100% 50% / 0.04) 0%, transparent 50%)",
         }}
       />
@@ -58,20 +58,16 @@ export default function Login() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
         className="hidden lg:flex flex-col justify-between w-[45%] p-14 relative z-10"
-        style={{ borderRight: "1px solid hsl(62 100% 52% / 0.1)" }}
+        style={{ borderRight: "1px solid hsl(78 100% 50% / 0.1)" }}
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{
-              background: "hsl(62 100% 52% / 0.1)",
-              border: "1px solid hsl(62 100% 52% / 0.3)",
-            }}
-          >
-            <Zap className="w-5 h-5 text-primary" />
-          </div>
-          <span className="text-xl font-heading font-black neon-text tracking-wider">SPANDAN 3.0</span>
+        <Link to="/" className="inline-block group">
+          <img
+            src="/spandan-logo.png"
+            alt="Spandan '26"
+            className="h-10 w-auto object-contain transition-all duration-300 group-hover:brightness-110"
+            style={{ filter: "drop-shadow(0 0 8px hsl(78 100% 50% / 0.3))" }}
+          />
         </Link>
 
         {/* Center content */}
@@ -105,8 +101,8 @@ export default function Login() {
                 key={s.label}
                 className="rounded-xl p-4 text-center"
                 style={{
-                  background: "hsl(62 100% 52% / 0.06)",
-                  border: "1px solid hsl(62 100% 52% / 0.12)",
+                  background: "hsl(78 100% 50% / 0.06)",
+                  border: "1px solid hsl(78 100% 50% / 0.12)",
                 }}
               >
                 <div className="text-xl font-heading font-black neon-text">{s.value}</div>
@@ -131,17 +127,21 @@ export default function Login() {
           className="w-full max-w-md"
         >
           {/* Mobile logo */}
-          <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
-            <Zap className="w-5 h-5 text-primary" />
-            <span className="font-heading font-black neon-text text-lg tracking-wider">SPANDAN 3.0</span>
+          <Link to="/" className="inline-block mb-8 lg:hidden">
+            <img
+              src="/spandan-logo.png"
+              alt="Spandan '26"
+              className="h-9 w-auto object-contain"
+              style={{ filter: "drop-shadow(0 0 6px hsl(78 100% 50% / 0.3))" }}
+            />
           </Link>
 
           <div
             className="rounded-2xl p-8"
             style={{
               background: "hsl(0 0% 6%)",
-              border: "1px solid hsl(62 100% 52% / 0.15)",
-              boxShadow: "0 0 60px hsl(62 100% 52% / 0.04)",
+              border: "1px solid hsl(78 100% 50% / 0.15)",
+              boxShadow: "0 0 60px hsl(78 100% 50% / 0.04)",
             }}
           >
             {/* Header */}

@@ -57,8 +57,8 @@ const EventCard = ({
         transition: "all 0.35s ease",
       }}
       whileHover={{
-        borderColor: "hsl(62 100% 52% / 0.35)",
-        boxShadow: "0 0 0 1px hsl(62 100% 52% / 0.1), 0 0 40px hsl(62 100% 52% / 0.08)",
+        borderColor: "hsl(78 100% 50% / 0.35)",
+        boxShadow: "0 0 0 1px hsl(78 100% 50% / 0.1), 0 0 40px hsl(78 100% 50% / 0.08)",
       }}
     >
       {/* ── Image ── */}
@@ -77,7 +77,7 @@ const EventCard = ({
         {/* Neon scanline on hover */}
         <div
           className="absolute inset-x-0 h-[1px] top-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ background: "linear-gradient(90deg, transparent, hsl(62 100% 52% / 0.4), transparent)" }}
+          style={{ background: "linear-gradient(90deg, transparent, hsl(78 100% 50% / 0.4), transparent)" }}
         />
 
         {/* Category Badge */}
@@ -85,7 +85,7 @@ const EventCard = ({
           <span
             className="px-2.5 py-1 text-[10px] font-display font-bold uppercase tracking-wider rounded-full"
             style={{
-              background: "hsl(62 100% 52%)",
+              background: "hsl(78 100% 50%)",
               color: "hsl(0 0% 4%)",
             }}
           >
@@ -97,8 +97,8 @@ const EventCard = ({
         <div
           className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0"
           style={{
-            background: "hsl(62 100% 52%)",
-            boxShadow: "0 0 12px hsl(62 100% 52% / 0.5)",
+            background: "hsl(78 100% 50%)",
+            boxShadow: "0 0 12px hsl(78 100% 50% / 0.5)",
           }}
         >
           <ArrowUpRight className="w-4 h-4 text-background" />
@@ -121,11 +121,11 @@ const EventCard = ({
         >
           <div className="flex flex-col gap-1.5 text-xs text-muted-foreground">
             <div className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" style={{ color: "hsl(62 100% 52%)" }} />
+              <Calendar className="w-3.5 h-3.5" style={{ color: "hsl(78 100% 50%)" }} />
               <span className="font-display">{date}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5" style={{ color: "hsl(62 100% 52%)" }} />
+              <Users className="w-3.5 h-3.5" style={{ color: "hsl(78 100% 50%)" }} />
               <span className="font-display">{teamSize}</span>
             </div>
           </div>
@@ -134,17 +134,17 @@ const EventCard = ({
             onClick={handleViewRulesClick}
             className="flex items-center gap-1.5 text-xs font-display font-semibold px-3 py-1.5 rounded-lg transition-all duration-300"
             style={{
-              background: "hsl(62 100% 52% / 0.08)",
-              border: "1px solid hsl(62 100% 52% / 0.15)",
-              color: "hsl(62 100% 52%)",
+              background: "hsl(78 100% 50% / 0.08)",
+              border: "1px solid hsl(78 100% 50% / 0.15)",
+              color: "hsl(78 100% 50%)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "hsl(62 100% 52% / 0.15)";
-              (e.currentTarget as HTMLElement).style.borderColor = "hsl(62 100% 52% / 0.4)";
+              (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.15)";
+              (e.currentTarget as HTMLElement).style.borderColor = "hsl(78 100% 50% / 0.4)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "hsl(62 100% 52% / 0.08)";
-              (e.currentTarget as HTMLElement).style.borderColor = "hsl(62 100% 52% / 0.15)";
+              (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.08)";
+              (e.currentTarget as HTMLElement).style.borderColor = "hsl(78 100% 50% / 0.15)";
             }}
           >
             <FileText className="w-3.5 h-3.5" />

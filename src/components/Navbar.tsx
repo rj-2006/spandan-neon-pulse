@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store/authStore";
@@ -20,9 +20,10 @@ import {
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
+  { name: "Team", href: "/team" },
+  { name: "Sponsors", href: "/sponsors" },
   { name: "Timeline", href: "/#timeline" },
   { name: "About", href: "/#about" },
-  { name: "Partners", href: "/#partners" },
 ];
 
 const Navbar = () => {
@@ -73,16 +74,13 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "h-14" : "h-16 md:h-20"}`}>
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:border-primary/60 group-hover:bg-primary/15 transition-all duration-300">
-              <Zap className="w-4 h-4 text-primary" />
-            </div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-xl md:text-2xl font-heading font-bold neon-text tracking-wider">
-                SPANDAN
-              </span>
-              <span className="text-xs font-display text-primary/60 font-semibold">3.0</span>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img
+              src="/spandan-logo.png"
+              alt="Spandan '26 — Engineering the Rhythm of a Greener World"
+              className="h-10 md:h-12 w-auto object-contain transition-all duration-300 group-hover:brightness-110"
+              style={{ filter: "drop-shadow(0 0 8px hsl(78 100% 50% / 0.3))" }}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -98,7 +96,7 @@ const Navbar = () => {
                     <motion.span
                       layoutId="nav-active"
                       className="absolute inset-0 bg-primary/8 rounded-lg border border-primary/20"
-                      style={{ boxShadow: "0 0 12px hsl(62 100% 52% / 0.1)" }}
+                      style={{ boxShadow: "0 0 12px hsl(78 100% 50% / 0.1)" }}
                     />
                   )}
                 </span>
@@ -119,7 +117,7 @@ const Navbar = () => {
                   <Button
                     variant="outline"
                     className="font-display font-semibold tracking-wide border-primary/40 text-primary hover:bg-primary/10 hover:border-primary transition-all"
-                    style={{ boxShadow: "0 0 12px hsl(62 100% 52% / 0.1)" }}
+                    style={{ boxShadow: "0 0 12px hsl(78 100% 50% / 0.1)" }}
                   >
                     <span className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse" />
                     {user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "Profile"}

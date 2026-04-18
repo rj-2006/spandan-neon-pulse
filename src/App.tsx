@@ -12,6 +12,8 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import EventRegistration from "./pages/EventRegistration";
+import Team from "./pages/Team";
+import Sponsors from "./pages/Sponsors";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -25,7 +27,7 @@ const App = () => {
         const response = await authAPI.refresh();
         setUser(response.data.user);
         setToken(response.data.accessToken);
-      } catch (err) {
+      } catch {
         setUser(null);
         setToken(null);
       } finally {
@@ -37,28 +39,37 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/timeline" element={<Index />} />
-          <Route path="/about" element={<Index />} />
-          <Route path="/partners" element={<Index />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          {/* Example of protected route usage */}
-          <Route element={<ProtectedRoute />}>
-             <Route path="/register" element={<EventRegistration />} />
-          </Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Home & hash-anchored pages */}
+            <Route path="/"         element={<Index />} />
+            <Route path="/timeline" element={<Index />} />
+            <Route path="/about"    element={<Index />} />
+            <Route path="/partners" element={<Index />} />
+
+            {/* Main pages */}
+            <Route path="/events"   element={<Events />} />
+            <Route path="/team"     element={<Team />} />
+            <Route path="/sponsors" element={<Sponsors />} />
+
+            {/* Auth */}
+            <Route path="/login"    element={<Login />} />
+            <Route path="/signup"   element={<Signup />} />
+
+            {/* Protected */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/register" element={<EventRegistration />} />
+            </Route>
+
+            {/* Catch-all */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 };
 

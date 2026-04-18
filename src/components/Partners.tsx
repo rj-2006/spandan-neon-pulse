@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 
 const partners = [
-  { name: "TechCorp", logo: "TC", color: "hsl(62 100% 52%)" },
+  { name: "TechCorp", logo: "TC", color: "hsl(78 100% 50%)" },
   { name: "InnovateLabs", logo: "IL", color: "hsl(185 100% 50%)" },
   { name: "FutureTech", logo: "FT", color: "hsl(300 100% 60%)" },
-  { name: "CodeBase", logo: "CB", color: "hsl(62 100% 52%)" },
+  { name: "CodeBase", logo: "CB", color: "hsl(78 100% 50%)" },
   { name: "AI Solutions", logo: "AI", color: "hsl(185 100% 50%)" },
   { name: "RoboTech", logo: "RT", color: "hsl(300 100% 60%)" },
-  { name: "DataFlow", logo: "DF", color: "hsl(62 100% 52%)" },
+  { name: "DataFlow", logo: "DF", color: "hsl(78 100% 50%)" },
   { name: "CloudSpark", logo: "CS", color: "hsl(185 100% 50%)" },
 ];
 
@@ -106,18 +106,18 @@ const Partners = () => {
             href="mailto:partners@spandan.tech"
             className="inline-flex items-center gap-2 font-display font-semibold text-sm px-6 py-3 rounded-full transition-all duration-300"
             style={{
-              background: "hsl(62 100% 52% / 0.08)",
-              border: "1px solid hsl(62 100% 52% / 0.2)",
-              color: "hsl(62 100% 52%)",
+              background: "hsl(78 100% 50% / 0.08)",
+              border: "1px solid hsl(78 100% 50% / 0.2)",
+              color: "hsl(78 100% 50%)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "hsl(62 100% 52% / 0.15)";
-              (e.currentTarget as HTMLElement).style.borderColor = "hsl(62 100% 52% / 0.5)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px hsl(62 100% 52% / 0.15)";
+              (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.15)";
+              (e.currentTarget as HTMLElement).style.borderColor = "hsl(78 100% 50% / 0.5)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 0 20px hsl(78 100% 50% / 0.15)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "hsl(62 100% 52% / 0.08)";
-              (e.currentTarget as HTMLElement).style.borderColor = "hsl(62 100% 52% / 0.2)";
+              (e.currentTarget as HTMLElement).style.background = "hsl(78 100% 50% / 0.08)";
+              (e.currentTarget as HTMLElement).style.borderColor = "hsl(78 100% 50% / 0.2)";
               (e.currentTarget as HTMLElement).style.boxShadow = "none";
             }}
           >

@@ -54,8 +54,8 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
               className="w-full max-w-2xl rounded-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
               style={{
                 background: "hsl(0 0% 6%)",
-                border: "1px solid hsl(62 100% 52% / 0.2)",
-                boxShadow: "0 0 60px hsl(62 100% 52% / 0.1), 0 0 0 1px hsl(62 100% 52% / 0.05)",
+                border: "1px solid hsl(78 100% 50% / 0.2)",
+                boxShadow: "0 0 60px hsl(78 100% 50% / 0.1), 0 0 0 1px hsl(78 100% 50% / 0.05)",
               }}
             >
               {/* Hero Image */}
@@ -83,7 +83,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                 <div className="absolute bottom-4 left-5">
                   <span
                     className="px-3 py-1 text-xs font-display font-bold uppercase tracking-wider rounded-full"
-                    style={{ background: "hsl(62 100% 52%)", color: "hsl(0 0% 4%)" }}
+                    style={{ background: "hsl(78 100% 50%)", color: "hsl(0 0% 4%)" }}
                   >
                     {event.category}
                   </span>
@@ -100,7 +100,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                   }}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.background = "hsl(0 0% 0% / 0.8)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "hsl(62 100% 52% / 0.4)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "hsl(78 100% 50% / 0.4)";
                   }}
                   onMouseLeave={(e) => {
                     (e.currentTarget as HTMLElement).style.background = "hsl(0 0% 0% / 0.5)";
@@ -124,9 +124,9 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                     <div
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-display font-semibold"
                       style={{
-                        background: "hsl(62 100% 52% / 0.08)",
-                        border: "1px solid hsl(62 100% 52% / 0.15)",
-                        color: "hsl(62 100% 52%)",
+                        background: "hsl(78 100% 50% / 0.08)",
+                        border: "1px solid hsl(78 100% 50% / 0.15)",
+                        color: "hsl(78 100% 50%)",
                       }}
                     >
                       <Calendar className="w-3 h-3" /> {event.date}
@@ -161,7 +161,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                     }}
                   >
                     <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
-                      <UserIcon className="w-3.5 h-3.5" style={{ color: "hsl(62 100% 52%)" }} />
+                      <UserIcon className="w-3.5 h-3.5" style={{ color: "hsl(78 100% 50%)" }} />
                       Event Coordinator
                     </h3>
                     <div className="flex items-center gap-4">
@@ -169,7 +169,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                         src={event.coordinator.photo}
                         alt={event.coordinator.name}
                         className="w-12 h-12 rounded-full object-cover"
-                        style={{ border: "2px solid hsl(62 100% 52% / 0.3)" }}
+                        style={{ border: "2px solid hsl(78 100% 50% / 0.3)" }}
                       />
                       <div>
                         <p className="font-display font-semibold text-foreground">
@@ -178,7 +178,7 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                         <a
                           href={`tel:${event.coordinator.phone.replace(/[^0-9+]/g, "")}`}
                           className="flex items-center gap-1 text-sm mt-0.5 transition-colors"
-                          style={{ color: "hsl(62 100% 52%)" }}
+                          style={{ color: "hsl(78 100% 50%)" }}
                         >
                           <Phone className="w-3 h-3" />
                           {event.coordinator.phone}

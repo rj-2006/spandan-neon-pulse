@@ -33,7 +33,7 @@ const Hero = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 65% 40%, hsl(62 100% 52% / 0.07) 0%, transparent 60%), " +
+            "radial-gradient(ellipse 80% 60% at 65% 40%, hsl(78 100% 50% / 0.07) 0%, transparent 60%), " +
             "radial-gradient(ellipse 50% 40% at 20% 70%, hsl(185 100% 50% / 0.05) 0%, transparent 50%), " +
             "linear-gradient(180deg, hsl(0 0% 3%) 0%, transparent 40%, hsl(0 0% 3%) 100%)",
         }}
@@ -58,7 +58,7 @@ const Hero = () => {
           className="w-full h-auto object-contain"
           style={{
             opacity: 0.35,
-            filter: "drop-shadow(0 0 40px hsl(62 100% 52% / 0.2)) drop-shadow(0 0 80px hsl(185 100% 50% / 0.1))",
+            filter: "drop-shadow(0 0 40px hsl(78 100% 50% / 0.2)) drop-shadow(0 0 80px hsl(185 100% 50% / 0.1))",
           }}
         />
       </motion.div>
@@ -74,13 +74,13 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8"
             style={{
-              background: "hsl(62 100% 52% / 0.08)",
-              border: "1px solid hsl(62 100% 52% / 0.2)",
+              background: "hsl(78 100% 50% / 0.08)",
+              border: "1px solid hsl(78 100% 50% / 0.2)",
             }}
           >
             <Sparkles className="w-3.5 h-3.5 text-primary" />
             <span className="text-xs font-display font-semibold text-primary/90 uppercase tracking-widest">
-              March 15–16, 2026 &bull; College Campus
+              May 1–3, 2026 &bull; College Campus
             </span>
           </motion.div>
 
@@ -106,7 +106,7 @@ const Hero = () => {
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                  filter: "drop-shadow(0 0 20px hsl(62 100% 52% / 0.5))",
+                  filter: "drop-shadow(0 0 20px hsl(78 100% 50% / 0.5))",
                 }}
               >
                 3.0
@@ -153,7 +153,7 @@ const Hero = () => {
             <p className="text-xs font-display text-muted-foreground mb-4 uppercase tracking-[0.2em] text-center lg:text-left">
               Event Starts In
             </p>
-            <div className="flex justify-center lg:justify-start">
+            <div className="flex justify-center lg:justify-start w-full">
               <CountdownTimer />
             </div>
           </motion.div>

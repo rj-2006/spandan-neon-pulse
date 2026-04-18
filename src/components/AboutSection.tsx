@@ -7,8 +7,8 @@ const features = [
     icon: Cpu,
     title: "AI & Robotics",
     description: "Explore cutting-edge artificial intelligence and robotics competitions that push the boundaries of technology.",
-    color: "hsl(62 100% 52%)",
-    colorDim: "hsl(62 100% 52% / 0.1)",
+    color: "hsl(78 100% 50%)",
+    colorDim: "hsl(78 100% 50% / 0.1)",
   },
   {
     icon: Trophy,
@@ -28,8 +28,8 @@ const features = [
     icon: Zap,
     title: "Innovation",
     description: "Showcase your ideas and compete with the brightest minds from across the country.",
-    color: "hsl(62 100% 52%)",
-    colorDim: "hsl(62 100% 52% / 0.1)",
+    color: "hsl(78 100% 50%)",
+    colorDim: "hsl(78 100% 50% / 0.1)",
   },
 ];
 
@@ -80,7 +80,7 @@ const AboutSection = () => {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 70% 50% at 30% 50%, hsl(62 100% 52% / 0.04) 0%, transparent 60%)",
+          background: "radial-gradient(ellipse 70% 50% at 30% 50%, hsl(78 100% 50% / 0.04) 0%, transparent 60%)",
         }}
       />
 
@@ -161,14 +161,14 @@ const AboutSection = () => {
           className="relative rounded-2xl overflow-hidden"
           style={{
             background: "hsl(0 0% 6%)",
-            border: "1px solid hsl(62 100% 52% / 0.15)",
-            boxShadow: "0 0 60px hsl(62 100% 52% / 0.05)",
+            border: "1px solid hsl(78 100% 50% / 0.15)",
+            boxShadow: "0 0 60px hsl(78 100% 50% / 0.05)",
           }}
         >
           {/* Glow strip at top */}
           <div
             className="absolute top-0 left-0 right-0 h-[1px]"
-            style={{ background: "linear-gradient(90deg, transparent, hsl(62 100% 52% / 0.5), transparent)" }}
+            style={{ background: "linear-gradient(90deg, transparent, hsl(78 100% 50% / 0.5), transparent)" }}
           />
 
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-border/40">
@@ -181,7 +181,7 @@ const AboutSection = () => {
                     backgroundClip: "text",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
-                    filter: "drop-shadow(0 0 10px hsl(62 100% 52% / 0.4))",
+                    filter: "drop-shadow(0 0 10px hsl(78 100% 50% / 0.4))",
                   }}
                 >
                   <Counter value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Github, Instagram, Linkedin, Twitter, Mail, MapPin, Zap, ArrowUpRight } from "lucide-react";
+import { Github, Instagram, Linkedin, Twitter, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 const socialLinks = [
   { icon: Instagram, href: "#", label: "Instagram", color: "hsl(330 100% 60%)" },
@@ -11,9 +11,10 @@ const socialLinks = [
 const quickLinks = [
   { name: "Home", href: "/" },
   { name: "Events", href: "/events" },
+  { name: "Team", href: "/team" },
+  { name: "Sponsors", href: "/sponsors" },
   { name: "Timeline", href: "/#timeline" },
   { name: "About", href: "/#about" },
-  { name: "Partners", href: "/#partners" },
 ];
 
 const Footer = () => {
@@ -22,20 +23,20 @@ const Footer = () => {
       className="relative overflow-hidden"
       style={{
         background: "hsl(0 0% 3%)",
-        borderTop: "1px solid hsl(62 100% 52% / 0.1)",
+        borderTop: "1px solid hsl(78 100% 50% / 0.1)",
       }}
     >
       {/* Top glow */}
       <div
         className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(62 100% 52% / 0.4), transparent)" }}
+        style={{ background: "linear-gradient(90deg, transparent, hsl(78 100% 50% / 0.4), transparent)" }}
       />
 
       {/* Orb bg accent */}
       <div
         className="absolute -top-40 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full pointer-events-none"
         style={{
-          background: "hsl(62 100% 52%)",
+          background: "hsl(78 100% 50%)",
           filter: "blur(100px)",
           opacity: 0.03,
         }}
@@ -46,18 +47,13 @@ const Footer = () => {
 
           {/* Brand — wider col */}
           <div className="md:col-span-5">
-            <Link to="/" className="inline-flex items-center gap-2.5 mb-6 group">
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all group-hover:border-primary/60"
-                style={{
-                  background: "hsl(62 100% 52% / 0.1)",
-                  border: "1px solid hsl(62 100% 52% / 0.25)",
-                }}
-              >
-                <Zap className="w-4 h-4 text-primary" />
-              </div>
-              <span className="text-2xl font-heading font-black neon-text tracking-wider">SPANDAN</span>
-              <span className="text-sm font-display text-primary/50 font-bold">3.0</span>
+            <Link to="/" className="inline-block mb-6 group">
+              <img
+                src="/spandan-logo.png"
+                alt="Spandan '26"
+                className="h-10 w-auto object-contain transition-all duration-300 group-hover:brightness-110"
+                style={{ filter: "drop-shadow(0 0 8px hsl(78 100% 50% / 0.25))" }}
+              />
             </Link>
 
             <p className="text-muted-foreground font-body text-sm max-w-xs leading-relaxed mb-6">
@@ -85,7 +81,7 @@ const Footer = () => {
           <div className="md:col-span-3">
             <h3
               className="font-heading font-bold text-xs uppercase tracking-widest mb-5"
-              style={{ color: "hsl(62 100% 52%)" }}
+              style={{ color: "hsl(78 100% 50%)" }}
             >
               Quick Links
             </h3>
@@ -108,7 +104,7 @@ const Footer = () => {
           <div className="md:col-span-4">
             <h3
               className="font-heading font-bold text-xs uppercase tracking-widest mb-5"
-              style={{ color: "hsl(62 100% 52%)" }}
+              style={{ color: "hsl(78 100% 50%)" }}
             >
               Follow Us
             </h3>
@@ -149,8 +145,8 @@ const Footer = () => {
             <div
               className="rounded-xl p-4"
               style={{
-                background: "hsl(62 100% 52% / 0.05)",
-                border: "1px solid hsl(62 100% 52% / 0.12)",
+                background: "hsl(78 100% 50% / 0.05)",
+                border: "1px solid hsl(78 100% 50% / 0.12)",
               }}
             >
               <p className="text-xs font-display font-semibold text-foreground/80 mb-1">
@@ -162,7 +158,7 @@ const Footer = () => {
               <a
                 href="mailto:partners@spandan.tech"
                 className="inline-flex items-center gap-1 text-xs font-display font-bold transition-all"
-                style={{ color: "hsl(62 100% 52%)" }}
+                style={{ color: "hsl(78 100% 50%)" }}
               >
                 Get in touch <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
