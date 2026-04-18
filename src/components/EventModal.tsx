@@ -1,9 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Phone, User as UserIcon } from "lucide-react";
+import { X, Phone, User as UserIcon, Calendar, Users, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
-
 import { EventData } from "@/data/events";
 
 interface EventModalProps {
@@ -27,6 +26,10 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
     }
   };
 
+  const handleViewRules = () => {
+    window.open("https://drive.google.com/", "_blank");
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -37,71 +40,145 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 z-50"
+            style={{ background: "hsl(0 0% 0% / 0.75)", backdropFilter: "blur(8px)" }}
           />
-          
-          {/* Modal Container */}
+
+          {/* Modal */}
           <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.92, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-card w-full max-w-lg rounded-2xl border border-border shadow-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+              exit={{ opacity: 0, scale: 0.92, y: 24 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="w-full max-w-2xl rounded-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+              style={{
+                background: "hsl(0 0% 6%)",
+                border: "1px solid hsl(62 100% 52% / 0.2)",
+                boxShadow: "0 0 60px hsl(62 100% 52% / 0.1), 0 0 0 1px hsl(62 100% 52% / 0.05)",
+              }}
             >
-              {/* Event Image and Header */}
-              <div className="relative h-48 sm:h-56 shrink-0">
+              {/* Hero Image */}
+              <div className="relative h-52 sm:h-64 shrink-0">
                 <img
                   src={event.image}
                   alt={event.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                
-                {/* Close Button */}
+                {/* Gradient */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, hsl(0 0% 6%) 0%, hsl(0 0% 6% / 0.3) 50%, transparent 100%)",
+                  }}
+                />
+                {/* Neon top line */}
+                <div
+                  className="absolute top-0 inset-x-0 h-[2px]"
+                  style={{ background: "var(--gradient-neon)", opacity: 0.7 }}
+                />
+
+                {/* Category badge */}
+                <div className="absolute bottom-4 left-5">
+                  <span
+                    className="px-3 py-1 text-xs font-display font-bold uppercase tracking-wider rounded-full"
+                    style={{ background: "hsl(62 100% 52%)", color: "hsl(0 0% 4%)" }}
+                  >
+                    {event.category}
+                  </span>
+                </div>
+
+                {/* Close */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-background/50 hover:bg-background/80 text-foreground transition-colors backdrop-blur-md z-10"
+                  className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full transition-all duration-200"
+                  style={{
+                    background: "hsl(0 0% 0% / 0.5)",
+                    border: "1px solid hsl(0 0% 100% / 0.1)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "hsl(0 0% 0% / 0.8)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "hsl(62 100% 52% / 0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = "hsl(0 0% 0% / 0.5)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "hsl(0 0% 100% / 0.1)";
+                  }}
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4 text-foreground" />
                 </button>
               </div>
 
-              {/* Event Content container */}
-              <div className="p-6 overflow-y-auto flex-1 flex flex-col">
-                {/* Event Title and Category */}
-                <div className="mb-6 flex flex-col items-center text-center">
-                  <span className="px-3 py-1 text-xs font-display font-semibold bg-primary text-primary-foreground rounded-full mb-3 inline-block shadow-sm">
-                    {event.category}
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-heading font-bold text-foreground">
-                    {event.title}
-                  </h2>
+              {/* Content */}
+              <div className="p-6 overflow-y-auto flex-1 flex flex-col gap-5">
+                {/* Title */}
+                <h2 className="text-2xl sm:text-3xl font-heading font-black leading-tight">
+                  {event.title}
+                </h2>
+
+                {/* Meta chips */}
+                <div className="flex flex-wrap gap-2">
+                  {event.date && (
+                    <div
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-display font-semibold"
+                      style={{
+                        background: "hsl(62 100% 52% / 0.08)",
+                        border: "1px solid hsl(62 100% 52% / 0.15)",
+                        color: "hsl(62 100% 52%)",
+                      }}
+                    >
+                      <Calendar className="w-3 h-3" /> {event.date}
+                    </div>
+                  )}
+                  {event.teamSize && (
+                    <div
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-display font-semibold"
+                      style={{
+                        background: "hsl(185 100% 50% / 0.08)",
+                        border: "1px solid hsl(185 100% 50% / 0.15)",
+                        color: "hsl(185 100% 50%)",
+                      }}
+                    >
+                      <Users className="w-3 h-3" /> {event.teamSize}
+                    </div>
+                  )}
                 </div>
 
-                <p className="text-muted-foreground font-body text-sm sm:text-base mb-6 leading-relaxed text-center">
+                {/* Description */}
+                <p className="text-muted-foreground font-body text-sm leading-relaxed">
                   {event.description}
                 </p>
 
-                {/* Coordinator Section */}
+                {/* Coordinator */}
                 {event.coordinator && (
-                  <div className="bg-secondary/30 rounded-xl p-4 mb-6 border border-border/50">
-                    <h3 className="text-sm font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
-                      <UserIcon className="w-4 h-4 text-primary" />
-                      Coordinator
+                  <div
+                    className="rounded-xl p-4"
+                    style={{
+                      background: "hsl(0 0% 8%)",
+                      border: "1px solid hsl(0 0% 14%)",
+                    }}
+                  >
+                    <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
+                      <UserIcon className="w-3.5 h-3.5" style={{ color: "hsl(62 100% 52%)" }} />
+                      Event Coordinator
                     </h3>
                     <div className="flex items-center gap-4">
                       <img
                         src={event.coordinator.photo}
                         alt={event.coordinator.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-primary/20 bg-muted"
+                        className="w-12 h-12 rounded-full object-cover"
+                        style={{ border: "2px solid hsl(62 100% 52% / 0.3)" }}
                       />
                       <div>
-                        <p className="font-display font-medium text-foreground">
+                        <p className="font-display font-semibold text-foreground">
                           {event.coordinator.name}
                         </p>
                         <a
-                          href={`tel:${event.coordinator.phone.replace(/[^0-9+]/g, '')}`}
-                          className="flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 transition-colors mt-1"
+                          href={`tel:${event.coordinator.phone.replace(/[^0-9+]/g, "")}`}
+                          className="flex items-center gap-1 text-sm mt-0.5 transition-colors"
+                          style={{ color: "hsl(62 100% 52%)" }}
                         >
                           <Phone className="w-3 h-3" />
                           {event.coordinator.phone}
@@ -111,18 +188,20 @@ const EventModal = ({ event, isOpen, onClose }: EventModalProps) => {
                   </div>
                 )}
 
-                {/* Action Buttons */}
-                <div className="flex gap-3 mt-auto pt-2">
+                {/* Actions */}
+                <div className="flex gap-3 mt-auto">
                   <Button
-                    onClick={onClose}
+                    onClick={handleViewRules}
                     variant="outline"
-                    className="flex-1 border-primary/30 hover:border-primary font-display"
+                    className="flex-1 font-display border-border/50 hover:border-primary/40 gap-2"
                   >
-                    Back
+                    <ExternalLink className="w-4 h-4" />
+                    View Rules
                   </Button>
                   <Button
                     onClick={handleRegister}
-                    className="flex-1 font-display hover-lift"
+                    className="flex-1 font-display font-bold gap-2"
+                    style={{ background: "var(--gradient-neon)", color: "hsl(0 0% 4%)", border: "none" }}
                   >
                     Register Now
                   </Button>

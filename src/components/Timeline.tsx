@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
 const timelineData = {
@@ -7,7 +7,7 @@ const timelineData = {
     { time: "09:00 AM", event: "Inauguration Ceremony", venue: "Main Auditorium" },
     { time: "10:30 AM", event: "Hackathon Kickoff", venue: "Tech Block" },
     { time: "11:00 AM", event: "AI/ML Workshop", venue: "Lab 101" },
-    { time: "02:00 PM", event: "Robotics Challenge - Round 1", venue: "Innovation Hub" },
+    { time: "02:00 PM", event: "Robotics Challenge — Round 1", venue: "Innovation Hub" },
     { time: "04:00 PM", event: "Coding Competition", venue: "Computer Lab" },
     { time: "06:00 PM", event: "Tech Talk: Future of AI", venue: "Seminar Hall" },
   ],
@@ -29,20 +29,17 @@ const Timeline = () => {
   const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const lineHeightValue = useMotionValue(0);
-  const lineHeightSpring = useSpring(lineHeightValue, { stiffness: 300, damping: 30 });
+  const lineHeightSpring = useSpring(lineHeightValue, { stiffness: 250, damping: 28 });
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     const currentDots = dotRefs.current;
-
     currentDots.forEach((dot, index) => {
       if (dot) {
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                setActiveItemIndex(index);
-              }
+              if (entry.isIntersecting) setActiveItemIndex(index);
             });
           },
           { threshold: 0.5 }
@@ -51,76 +48,98 @@ const Timeline = () => {
         observers.push(observer);
       }
     });
-
-    return () => {
-      observers.forEach((observer) => observer.disconnect());
-    };
-  }, [activeDay]); // Re-run when activeDay changes
+    return () => observers.forEach((o) => o.disconnect());
+  }, [activeDay]);
 
   useEffect(() => {
     if (activeItemIndex >= 0 && dotRefs.current[activeItemIndex] && timelineRef.current) {
-      const dotRect = dotRefs.current[activeItemIndex].getBoundingClientRect();
+      const dotRect = dotRefs.current[activeItemIndex]!.getBoundingClientRect();
       const timelineRect = timelineRef.current.getBoundingClientRect();
-      const dotCenter = dotRect.top - timelineRect.top + dotRect.height / 2;
-      lineHeightValue.set(dotCenter);
+      lineHeightValue.set(dotRect.top - timelineRect.top + dotRect.height / 2);
     }
   }, [activeItemIndex, lineHeightValue]);
 
   return (
-    <section id="timeline" className="py-20 md:py-32 relative bg-secondary/20 scroll-snap-start" ref={containerRef}>
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
+    <section
+      id="timeline"
+      className="py-24 md:py-36 relative overflow-hidden"
+      ref={containerRef}
+      style={{ background: "hsl(0 0% 4%)" }}
+    >
+      {/* Subtle gradient bg */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 60% at 50% 0%, hsl(62 100% 52% / 0.04) 0%, transparent 60%)",
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-14"
         >
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-            Event <span className="text-primary neon-text">Timeline</span>
+          <div className="section-tag mb-5 mx-auto">Schedule</div>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-5">
+            Event <span className="neon-text">Timeline</span>
           </h2>
-          <p className="text-muted-foreground font-display max-w-xl mx-auto">
+          <p className="text-muted-foreground font-display max-w-xl mx-auto text-lg">
             Two days packed with innovation, competition, and learning experiences.
           </p>
         </motion.div>
 
         {/* Day Tabs */}
-        <div className="flex justify-center gap-4 mb-12">
-          {["day1", "day2"].map((day, index) => (
-            <button
-              key={day}
-              onClick={() => setActiveDay(day as "day1" | "day2")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-display font-semibold transition-all duration-300 ${
-                activeDay === day
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-secondary/50 text-foreground hover:bg-secondary border border-border"
-              }`}
-            >
-              <Calendar className="w-4 h-4" />
-              Day 0{index + 1}
-            </button>
-          ))}
+        <div className="flex justify-center gap-3 mb-14">
+          {(["day1", "day2"] as const).map((day, index) => {
+            const active = activeDay === day;
+            return (
+              <button
+                key={day}
+                onClick={() => { setActiveDay(day); setActiveItemIndex(-1); lineHeightValue.set(0); }}
+                className="relative flex items-center gap-2.5 px-7 py-3 rounded-full font-display font-semibold text-sm transition-all duration-300"
+                style={{
+                  background: active ? "var(--gradient-neon)" : "hsl(0 0% 8%)",
+                  color: active ? "hsl(0 0% 4%)" : "hsl(0 0% 60%)",
+                  border: active ? "none" : "1px solid hsl(0 0% 16%)",
+                  boxShadow: active ? "0 0 20px hsl(62 100% 52% / 0.3)" : "none",
+                }}
+              >
+                <Calendar className="w-4 h-4" />
+                Day 0{index + 1}
+                {active && (
+                  <span className="absolute inset-0 rounded-full animate-ping opacity-10"
+                    style={{ background: "hsl(62 100% 52%)" }} />
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* Timeline Items */}
         <motion.div
           key={activeDay}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           className="max-w-3xl mx-auto"
         >
           <div className="relative" ref={timelineRef}>
-            {/* Background Vertical Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border/30 md:-translate-x-1/2" />
-            
+            {/* Background Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px md:-translate-x-1/2"
+              style={{ background: "hsl(0 0% 14%)" }} />
+
             {/* Animated Progress Line */}
             <motion.div
-              className="absolute left-4 md:left-1/2 top-0 w-px bg-primary md:-translate-x-1/2 origin-top"
+              className="absolute left-4 md:left-1/2 top-0 w-px md:-translate-x-1/2 origin-top"
               style={{
                 height: lineHeightSpring,
-                boxShadow: "0 0 10px hsl(67 100% 50% / 0.5), 0 0 20px hsl(67 100% 50% / 0.3)"
+                background: "hsl(62 100% 52%)",
+                boxShadow: "0 0 10px hsl(62 100% 52% / 0.6), 0 0 30px hsl(62 100% 52% / 0.3)",
               }}
             />
 
@@ -129,49 +148,62 @@ const Timeline = () => {
                 key={item.event}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.08 }}
                 className={`relative flex items-start gap-4 mb-8 ${
                   index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                {/* Timeline Dot */}
+                {/* Dot */}
                 <motion.div
                   ref={(el) => (dotRefs.current[index] = el)}
-                  className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary border-2 border-background md:-translate-x-1/2 z-10"
+                  className="absolute left-4 md:left-1/2 w-3.5 h-3.5 rounded-full md:-translate-x-1/2 z-10"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
                   style={{
-                    boxShadow: "0 0 10px hsl(67 100% 50% / 0.6)"
+                    background: index <= activeItemIndex ? "hsl(62 100% 52%)" : "hsl(0 0% 20%)",
+                    border: "2px solid hsl(0 0% 4%)",
+                    boxShadow: index <= activeItemIndex ? "0 0 12px hsl(62 100% 52% / 0.7)" : "none",
+                    transition: "all 0.3s ease",
                   }}
                 />
 
-                {/* Content Card */}
+                {/* Card */}
                 <motion.div
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -24 : 24 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.4, delay: 0.1 }}
-                  className={`ml-10 md:ml-0 md:w-[calc(50%-2rem)] glow-card p-4 ${
-                    index % 2 === 0 ? "md:mr-auto md:text-right" : "md:ml-auto"
+                  className={`ml-10 md:ml-0 md:w-[calc(50%-2.5rem)] rounded-xl p-5 group hover-lift ${
+                    index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
                   }`}
+                  style={{
+                    background: "hsl(0 0% 6%)",
+                    border: "1px solid hsl(0 0% 14%)",
+                    borderLeft: "3px solid hsl(62 100% 52% / 0.6)",
+                    transition: "all 0.3s ease",
+                  }}
+                  whileHover={{
+                    borderLeftColor: "hsl(62 100% 52%)",
+                    boxShadow: "0 0 20px hsl(62 100% 52% / 0.1)",
+                  }}
                 >
-                  <div className={`flex items-center gap-2 text-primary mb-2 ${
-                    index % 2 === 0 ? "md:justify-end" : ""
-                  }`}>
-                    <Clock className="w-4 h-4" />
-                    <span className="font-display font-semibold text-sm">
+                  {/* Time */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="w-3.5 h-3.5 shrink-0" style={{ color: "hsl(62 100% 52%)" }} />
+                    <span className="font-display font-bold text-xs uppercase tracking-wider"
+                      style={{ color: "hsl(62 100% 52%)" }}>
                       {item.time}
                     </span>
                   </div>
-                  <h3 className="font-heading font-semibold text-lg mb-1">
+
+                  <h3 className="font-heading font-bold text-base mb-2 group-hover:text-primary transition-colors">
                     {item.event}
                   </h3>
-                  <div className={`flex items-center gap-1 text-muted-foreground text-sm ${
-                    index % 2 === 0 ? "md:justify-end" : ""
-                  }`}>
-                    <MapPin className="w-3 h-3" />
+
+                  <div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+                    <MapPin className="w-3 h-3 shrink-0" />
                     <span className="font-body">{item.venue}</span>
                   </div>
                 </motion.div>

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store/authStore";
@@ -27,8 +27,16 @@ const navLinks = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { isAuthenticated, user, logout } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -36,62 +44,102 @@ const Navbar = () => {
       logout();
       toast.success("Logged out successfully");
       navigate("/");
-    } catch (error) {
+    } catch {
       toast.error("Failed to logout");
     }
   };
 
+  const handleRegisterClick = () => {
+    setIsOpen(false);
+    navigate(isAuthenticated ? "/register" : "/signup");
+  };
+
+  const isActive = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    return location.pathname.startsWith(href.split("#")[0]) && !href.includes("#");
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-2xl border-b border-primary/10 shadow-[0_1px_30px_hsl(62_100%_52%/0.05)]"
+          : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "h-14" : "h-16 md:h-20"}`}>
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl md:text-2xl font-heading font-bold text-primary neon-text">
-              SPANDAN
-            </span>
-            <span className="text-xs md:text-sm font-display text-muted-foreground">
-              3.0
-            </span>
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:border-primary/60 group-hover:bg-primary/15 transition-all duration-300">
+              <Zap className="w-4 h-4 text-primary" />
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-xl md:text-2xl font-heading font-bold neon-text tracking-wider">
+                SPANDAN
+              </span>
+              <span className="text-xs font-display text-primary/60 font-semibold">3.0</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              link.href.includes('#') ? (
-                <HashLink
-                  key={link.name}
-                  to={link.href}
-                  className="font-display text-sm text-foreground/80 hover:text-primary transition-colors duration-300 tracking-wide"
-                  smooth
-                >
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              const inner = (
+                <span className={`relative px-4 py-2 rounded-lg font-display text-sm tracking-wide transition-all duration-300 ${
+                  active ? "text-primary" : "text-foreground/70 hover:text-foreground"
+                }`}>
                   {link.name}
-                </HashLink>
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 bg-primary/8 rounded-lg border border-primary/20"
+                      style={{ boxShadow: "0 0 12px hsl(62 100% 52% / 0.1)" }}
+                    />
+                  )}
+                </span>
+              );
+              return link.href.includes("#") ? (
+                <HashLink key={link.name} to={link.href} smooth>{inner}</HashLink>
               ) : (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="font-display text-sm text-foreground/80 hover:text-primary transition-colors duration-300 tracking-wide"
-                >
-                  {link.name}
-                </Link>
-              )
-            ))}
+                <Link key={link.name} to={link.href}>{inner}</Link>
+              );
+            })}
           </div>
 
-          {/* CTA Button / User Profile */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="font-display font-semibold tracking-wide border-primary text-primary hover:bg-primary/10">
-                    {user?.name || user?.email?.split('@')[0] || "Profile"}
+                  <Button
+                    variant="outline"
+                    className="font-display font-semibold tracking-wide border-primary/40 text-primary hover:bg-primary/10 hover:border-primary transition-all"
+                    style={{ boxShadow: "0 0 12px hsl(62 100% 52% / 0.1)" }}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse" />
+                    {user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "Profile"}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background/95 backdrop-blur-xl border-border">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-56 bg-card/95 backdrop-blur-2xl border-border/50">
+                  <DropdownMenuLabel className="font-display text-muted-foreground">
+                    {user?.email}
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-destructive cursor-pointer">
+                  <DropdownMenuItem
+                    onClick={() => navigate("/register")}
+                    className="font-display cursor-pointer"
+                  >
+                    Register for Event
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="text-destructive cursor-pointer font-display"
+                  >
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -100,15 +148,15 @@ const Navbar = () => {
               <>
                 <Button
                   variant="ghost"
-                  className="font-display font-semibold tracking-wide"
-                  onClick={() => navigate('/login')}
+                  className="font-display font-semibold tracking-wide text-foreground/80 hover:text-foreground"
+                  onClick={() => navigate("/login")}
                 >
                   Log in
                 </Button>
                 <Button
-                  variant="default"
-                  className="font-display font-semibold tracking-wide"
-                  onClick={() => navigate('/signup')}
+                  className="font-display font-bold tracking-wide pulse-glow"
+                  onClick={handleRegisterClick}
+                  style={{ background: "var(--gradient-neon)", color: "hsl(0 0% 4%)" }}
                 >
                   Register Now
                 </Button>
@@ -116,12 +164,24 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
+            id="mobile-menu-toggle"
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            className="md:hidden p-2 rounded-lg text-foreground hover:text-primary hover:bg-primary/10 transition-all"
+            aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={isOpen ? "close" : "open"}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isOpen ? <X size={22} /> : <Menu size={22} />}
+              </motion.div>
+            </AnimatePresence>
           </button>
         </div>
       </div>
@@ -133,39 +193,80 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden bg-background/98 backdrop-blur-2xl border-b border-primary/10"
           >
-            <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                link.href.includes('#') ? (
-                  <HashLink
-                    key={link.name}
-                    to={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-display text-lg text-foreground/80 hover:text-primary transition-colors py-2"
-                    smooth
-                  >
-                    {link.name}
-                  </HashLink>
-                ) : (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-display text-lg text-foreground/80 hover:text-primary transition-colors py-2"
-                  >
-                    {link.name}
-                  </Link>
-                )
+            <div className="container mx-auto px-4 py-6 flex flex-col gap-1">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                >
+                  {link.href.includes("#") ? (
+                    <HashLink
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="block font-display text-base text-foreground/80 hover:text-primary transition-colors py-3 px-3 rounded-lg hover:bg-primary/5"
+                      smooth
+                    >
+                      {link.name}
+                    </HashLink>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="block font-display text-base text-foreground/80 hover:text-primary transition-colors py-3 px-3 rounded-lg hover:bg-primary/5"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
+                </motion.div>
               ))}
-              <Button variant="default" className="mt-2 font-display font-semibold">
-                Register Now
-              </Button>
+
+              <div className="mt-4 pt-4 border-t border-border/50 flex flex-col gap-3">
+                {isAuthenticated ? (
+                  <>
+                    <Button
+                      variant="outline"
+                      className="font-display border-primary/30 text-primary"
+                      onClick={() => { setIsOpen(false); navigate("/register"); }}
+                    >
+                      My Registrations
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="font-display text-destructive"
+                      onClick={() => { setIsOpen(false); handleLogout(); }}
+                    >
+                      Log out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="ghost"
+                      className="font-display"
+                      onClick={() => { setIsOpen(false); navigate("/login"); }}
+                    >
+                      Log in
+                    </Button>
+                    <Button
+                      className="font-display font-bold"
+                      onClick={handleRegisterClick}
+                      style={{ background: "var(--gradient-neon)", color: "hsl(0 0% 4%)" }}
+                    >
+                      Register Now
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };
 
