@@ -124,7 +124,7 @@ const EventRegistration = () => {
     return (
       <div className="min-h-screen flex flex-col bg-background">
         <Navbar />
-        <div className="flex-1 flex items-center justify-center p-6">
+        <div className="flex-1 flex items-center justify-center px-6 pt-24 pb-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
