@@ -6,10 +6,13 @@ import Footer from "@/components/Footer";
 import { teamMembers, departments, TeamMember } from "@/data/team";
 
 const deptColors: Record<string, string> = {
-  "Core Committee": "hsl(78 100% 50%)",
+  "Event Coordinators": "hsl(45 100% 55%)",
+  "Devign": "hsl(300 100% 60%)",
+  "Art nd Craft": "hsl(330 100% 60%)",
+  "Photography": "hsl(210 100% 56%)",
   "Tech Team": "hsl(185 100% 50%)",
-  "Marketing Team": "hsl(300 100% 60%)",
-  "Events Team": "hsl(45 100% 55%)",
+  "Management": "hsl(78 100% 50%)",
+  "Discipline": "hsl(0 100% 60%)",
 };
 
 const MemberCard = ({ member, index }: { member: TeamMember; index: number }) => {

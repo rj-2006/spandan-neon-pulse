@@ -26,7 +26,7 @@ const App = () => {
       // ── Handle Google OAuth callback params ──────────────────────────────
       const params = new URLSearchParams(window.location.search);
       const googleSuccess = params.has("google_success");
-      const googleError   = params.get("error");
+      const googleError = params.get("error");
 
       // Clean query params from the URL immediately (don't leave them on reload)
       if (googleSuccess || googleError) {
@@ -70,19 +70,19 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             {/* Home & hash-anchored pages */}
-            <Route path="/"         element={<Index />} />
+            <Route path="/" element={<Index />} />
             <Route path="/timeline" element={<Index />} />
-            <Route path="/about"    element={<Index />} />
+            <Route path="/about" element={<Index />} />
             <Route path="/partners" element={<Index />} />
 
             {/* Main pages */}
-            <Route path="/events"   element={<Events />} />
-            <Route path="/team"     element={<Team />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/team" element={<Team />} />
             <Route path="/sponsors" element={<Sponsors />} />
 
             {/* Auth */}
-            <Route path="/login"    element={<Login />} />
-            <Route path="/signup"   element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
             {/* Protected */}
             <Route element={<ProtectedRoute />}>
