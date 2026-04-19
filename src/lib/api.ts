@@ -38,7 +38,10 @@ export const authAPI = {
     // baseURL is e.g. "http://localhost:5000" — navigate directly to the OAuth start route
     const base = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "");
     window.location.href = `${base}/auth/google`;
-  }
+  },
+  exchangeCode: async (code: string) => {
+    return apiClient.post('/auth/exchange-code', { code });
+  },
 };
 
 export const eventsAPI = {

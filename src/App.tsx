@@ -23,35 +23,56 @@ const App = () => {
 
   useEffect(() => {
     const initAuth = async () => {
-      // ── Handle Google OAuth callback params ──────────────────────────────
       const params = new URLSearchParams(window.location.search);
-      const googleSuccess = params.has("google_success");
+      const oauthCode = params.get("code");
       const googleError = params.get("error");
 
-      // Clean query params from the URL immediately (don't leave them on reload)
-      if (googleSuccess || googleError) {
+      // Clean query params from the URL immediately
+      if (oauthCode || googleError) {
         window.history.replaceState({}, "", window.location.pathname);
       }
 
-      // Show error toast if Google auth failed
+      // ── Google OAuth error ───────────────────────────────────────────────
       if (googleError === "google_auth_failed") {
-        // Dynamically import to avoid circular deps; toast fires after render
         import("sonner").then(({ toast }) => {
           toast.error("Google sign-in failed. Please try again.");
         });
+        setUser(null);
+        setToken(null);
+        setIsLoading(false);
+        return;
       }
 
-      // ── Refresh session (works for both normal and Google OAuth) ─────────
+      // ── Google OAuth success — exchange one-time code for tokens ─────────
+      // The backend set no cookie during the redirect (Brave blocks those).
+      // Instead it redirected here with ?code=XYZ. We POST it to /auth/exchange-code
+      // which sets the refreshToken cookie via a direct credentialed XHR —
+      // browsers including Brave accept cookies set this way.
+      if (oauthCode) {
+        try {
+          const response = await authAPI.exchangeCode(oauthCode);
+          setUser(response.data.user);
+          setToken(response.data.accessToken);
+          import("sonner").then(({ toast }) => {
+            toast.success("Signed in with Google!");
+          });
+        } catch {
+          import("sonner").then(({ toast }) => {
+            toast.error("Google sign-in failed. Please try again.");
+          });
+          setUser(null);
+          setToken(null);
+        } finally {
+          setIsLoading(false);
+        }
+        return;
+      }
+
+      // ── Normal page load — restore session via refresh token cookie ───────
       try {
         const response = await authAPI.refresh();
         setUser(response.data.user);
         setToken(response.data.accessToken);
-
-        if (googleSuccess) {
-          import("sonner").then(({ toast }) => {
-            toast.success("Signed in with Google!");
-          });
-        }
       } catch {
         setUser(null);
         setToken(null);

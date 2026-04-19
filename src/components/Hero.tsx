@@ -3,7 +3,6 @@ import { ArrowRight, Sparkles, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import CountdownTimer from "./CountdownTimer";
-import heroImage from "@/assets/hero-robot.png";
 import { useAuthStore } from "@/store/authStore";
 
 const Hero = () => {
@@ -44,37 +43,27 @@ const Hero = () => {
       <div className="orb orb-cyan absolute w-60 h-60 bottom-20 left-10 opacity-[0.08]" />
       <div className="orb orb-magenta absolute w-40 h-40 top-1/3 left-1/4 opacity-[0.06]" />
 
-      {/* ── Hero Robot Image & 3D Model ── */}
+      {/* ── Hero 3D Model ── */}
       <motion.div
-        style={{ rotateX, rotateY, perspective: 1000 }}
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-[55%] h-auto hidden lg:block"
+        className="absolute -right-16 top-[19%] -translate-y-1/2 w-[55%] h-[500px] xl:h-[700px] hidden lg:block"
       >
-        <img
-          src={heroImage}
-          alt="Futuristic Robot — Spandan 3.0"
-          className="w-full h-auto object-contain pointer-events-none relative z-0"
-          style={{
-            opacity: 0.35,
-            filter: "drop-shadow(0 0 40px hsl(78 100% 50% / 0.2)) drop-shadow(0 0 80px hsl(185 100% 50% / 0.1))",
-          }}
-        />
         <model-viewer
           src="/spanlogo.glb"
           auto-rotate
+          camera-controls
+          disable-zoom
+          disable-pan
+          interaction-prompt="none"
           rotation-per-second="30deg"
           style={{
-            position: "absolute",
-            top: "-55%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "45%",
-            height: "45%",
-            zIndex: 10,
-            pointerEvents: "none",
-            backgroundColor: "transparent"
+            width: "100%",
+            height: "100%",
+            zIndex: 50,
+            pointerEvents: "auto",
+            backgroundColor: "transparent",
           }}
         ></model-viewer>
       </motion.div>
