@@ -141,7 +141,21 @@ const rawEvents: RawEventData[] = [
   },
 ];
 
+const imageMap: Record<string, string> = {
+  "GreenHack: Code for Impact": "GreenHack.webp",
+  "AlgoRhythm": "AlgoRhythm.webp",
+  "AI Foresight": "AI-Foresight.webp",
+  "BridgeIt": "BridgeIt.webp",
+  "TechScape Hunt": "TechScape Hunt.webp",
+  "GeoCraft Arena": "GeoCraftArena.webp",
+  "NetRunnerz": "NetRunnerz.webp",
+  "EcoInnovate": "EcoInnovate.webp",
+  "DesignForge": "DesignForge.webp",
+  "Circuit Chase": "Circuit Chase.webp",
+  "WALL-E": "WALL-E.webp",
+};
+
 export const events: EventData[] = rawEvents.map(event => ({
   ...event,
-  image: `/event/${event.title.replace(/:/g, '')}${event.title === 'WALL-E' ? '.jpg' : '.png'}`
+  image: `/event/${imageMap[event.title]}`
 }));
