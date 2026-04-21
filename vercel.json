@@ -3,6 +3,10 @@
     {
       "source": "/api/(.*)",
       "destination": "https://spandanbackend-0wn8.onrender.com/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

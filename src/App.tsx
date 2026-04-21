@@ -109,6 +109,7 @@ const App = () => {
             {/* Main pages */}
             <Route path="/events" element={<Events />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/teams" element={<Team />} />
             <Route path="/sponsors" element={<Sponsors />} />
 
             {/* Auth */}
