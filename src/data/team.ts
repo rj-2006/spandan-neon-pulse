@@ -50,7 +50,7 @@ export const teamMembers: TeamMember[] = [
     name: "Abhay Kumar",
     role: "Coordinator - BridgeIt",
     department: "Event Coordinators",
-    image: "https://i.pravatar.cc/300?u=abhay",
+    image: "",
     email: "gbpietspandan@gmail.com",
     linkedin: "#",
     instagram: "#",
