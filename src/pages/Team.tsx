@@ -164,6 +164,7 @@ const room105Mates = [
 
 const MemberCard = ({ member, index }: { member: TeamMember; index: number }) => {
   const accentColor = deptColors[member.department] || "hsl(78 100% 50%)";
+  const showCaptions = member.department === "Devign";
   const isRahul = member.department === "Devign" && member.name === ["Rahul", "Joshi"].join(" ");
 
   return (
@@ -295,11 +296,14 @@ const MemberCard = ({ member, index }: { member: TeamMember; index: number }) =>
         <h3 className="font-heading font-bold text-base mb-0.5 group-hover:text-primary transition-colors">
           {member.name}
         </h3>
-        <p className="font-display text-sm font-medium mb-3" style={{ color: accentColor }}>
-          {member.role}
-        </p>
-        {/* Email shown */}
-        <p className="text-xs font-body text-muted-foreground truncate">{member.email}</p>
+        {showCaptions && (
+          <>
+            <p className="font-display text-sm font-medium mb-3" style={{ color: accentColor }}>
+              {member.role}
+            </p>
+            <p className="text-xs font-body text-muted-foreground truncate">{member.email}</p>
+          </>
+        )}
       </div>
       </div>
       </motion.div>
