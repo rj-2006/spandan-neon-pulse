@@ -167,6 +167,13 @@ const MemberCard = ({ member, index }: { member: TeamMember; index: number }) =>
   const showCaptions = member.department === "Devign";
   const disableExternalSocials = member.department === "Devign";
   const isRahul = member.department === "Devign" && member.name === ["Rahul", "Joshi"].join(" ");
+  const initials = member.name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <motion.div
@@ -223,13 +230,34 @@ const MemberCard = ({ member, index }: { member: TeamMember; index: number }) =>
 
       {/* Image area */}
       <div className="relative h-56 overflow-hidden">
-        <img
-          src={member.image}
-          alt={member.name}
-          loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          style={isRahul ? { filter: "contrast(1.06) brightness(1.04) saturate(1.08)" } : {}}
-        />
+        {member.image ? (
+          <img
+            src={member.image}
+            alt={member.name}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            style={isRahul ? { filter: "contrast(1.06) brightness(1.04) saturate(1.08)" } : {}}
+          />
+        ) : (
+          <div
+            className="w-full h-full flex items-center justify-center transition-transform duration-700 group-hover:scale-105"
+            style={{
+              background:
+                `radial-gradient(circle at 50% 36%, ${accentColor}24, transparent 34%), ` +
+                "linear-gradient(145deg, hsl(0 0% 11%), hsl(0 0% 4%))",
+            }}
+          >
+            <span
+              className="font-heading text-5xl font-black"
+              style={{
+                color: accentColor,
+                textShadow: `0 0 24px ${accentColor}55`,
+              }}
+            >
+              {initials}
+            </span>
+          </div>
+        )}
         {/* Gradient */}
         <div
           className="absolute inset-0"
