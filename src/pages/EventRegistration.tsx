@@ -29,7 +29,7 @@ import Footer from "@/components/Footer";
 const eventOptions = events.map((e) => e.title);
 
 const collegeOptions = ["GBPIET", "Others"];
-const branchOptions = ["CSE", "AIML", "BT", "ME", "MCA", "EE", "ECE", "Others"];
+const branchOptions = ["CSE", "AIML", "BT", "ME", "MCA", "Civil", "EE", "ECE", "Others"];
 const yearOptions = ["1st Year", "2nd Year", "3rd Year", "Final Year"];
 
 // ── Shared style helpers ──────────────────────────────────────────────────────
