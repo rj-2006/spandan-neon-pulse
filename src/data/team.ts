@@ -290,7 +290,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Shambhavi pandey",
     role: "Member",
-    department: "Volunteers",
+    department: "Event Coordinators",
     image: "/team/shambhavi.webp",
     email: "Shambhavip2004@gmail.com",
     linkedin: "#",

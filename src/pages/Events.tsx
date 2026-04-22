@@ -10,17 +10,12 @@ import { Button } from "@/components/ui/button";
 
 const categories = [
   "All",
-  "Hackathon",
-  "DSA Problem Solving",
-  "ML Bot + Prediction Model",
-  "Bridge Making",
-  "Treasure Hunt",
-  "Terrain Manipulator Challenge",
-  "Robo Soccer",
-  "Innovation For Sustainable Future",
-  "Design Event",
-  "Line Following Robot",
-  "Grafitti",
+  "Coding",
+  "Design",
+  "Robotics",
+  "Innovation",
+  "Fun Tech",
+  "Creative",
 ];
 
 const Events = () => {

@@ -13,6 +13,24 @@ const deptColors: Record<string, string> = {
   "Volunteers": "hsl(280 100% 60%)",
 };
 
+const defaultTeamImagePosition = "center 36%";
+
+const teamImagePositions: Record<string, string> = {
+  "Aniket": "center 68%",
+  "Anshika Rawat": "center 44%",
+  "Aastha Joshi": "center 42%",
+  "Gaurav Pal": "center 0%",
+  "Harshit goswami": "center 34%",
+  "Kriti Uniyal": "center 40%",
+  "Mitali bijalwan": "center 42%",
+  "Priyanshi Bisht": "center 40%",
+  "Riya singh": "center 0%",
+  "Ritik negi": "center 44%",
+  "Shambhavi pandey": "center 44%",
+  "Suhani Janoti": "center 0%",
+  "Sucheta Singh": "center 8%",
+};
+
 const allStyles = `
 @keyframes room105Bob {
   0%, 100% { transform: translateY(0) rotate(var(--room-tilt)); }
@@ -167,6 +185,7 @@ const MemberCard = ({ member, index }: { member: TeamMember; index: number }) =>
   const showCaptions = member.department === "Devign";
   const disableExternalSocials = member.department === "Devign";
   const isRahul = member.department === "Devign" && member.name === ["Rahul", "Joshi"].join(" ");
+  const imagePosition = teamImagePositions[member.name] || defaultTeamImagePosition;
   const initials = member.name
     .split(" ")
     .filter(Boolean)
@@ -236,7 +255,10 @@ const MemberCard = ({ member, index }: { member: TeamMember; index: number }) =>
             alt={member.name}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            style={isRahul ? { filter: "contrast(1.06) brightness(1.04) saturate(1.08)" } : {}}
+            style={{
+              objectPosition: imagePosition,
+              ...(isRahul ? { filter: "contrast(1.06) brightness(1.04) saturate(1.08)" } : {}),
+            }}
           />
         ) : (
           <div
